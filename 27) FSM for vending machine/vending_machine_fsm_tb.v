@@ -24,23 +24,28 @@ module vending_machine_fsm_tb();
         #10; rst = 0; insert5 = 1; insert10 = 0; cancel = 0;
         #10; rst = 0; insert5 = 1; insert10 = 0; cancel = 0;
         #10; rst = 0; insert5 = 0; insert10 = 1; cancel = 0;
+        #10; insert5 = 0; insert10 = 0;
         
         // 5 + 5 + 5 dispense
         #10; rst = 0; insert5 = 1; insert10 = 0; cancel = 0;
         #10; rst = 0; insert5 = 1; insert10 = 0; cancel = 0;
         #10; rst = 0; insert5 = 1; insert10 = 0; cancel = 0;
+        #10; insert5 = 0; insert10 = 0;
         
         // 10 + 10 dispense
         #10; rst = 0; insert5 = 0; insert10 = 1; cancel = 0;
         #10; rst = 0; insert5 = 0; insert10 = 1; cancel = 0;
+        #10; insert5 = 0; insert10 = 0;
         
         // 5 + 10 dispense
         #10; rst = 0; insert5 = 0; insert10 = 1; cancel = 0;
         #10; rst = 0; insert5 = 1; insert10 = 0; cancel = 0;
+        #10; insert5 = 0; insert10 = 0;
         
         // 10 + 5 dispense
         #10; rst = 0; insert5 = 1; insert10 = 0; cancel = 0;
         #10; rst = 0; insert5 = 0; insert10 = 1; cancel = 0;
+        #10; insert5 = 0; insert10 = 0;
         
         // 5 + cancel + 5 + 5 + 5 dispense
         #10; rst = 0; insert5 = 1; insert10 = 0; cancel = 0;
@@ -48,6 +53,7 @@ module vending_machine_fsm_tb();
         #10; rst = 0; insert5 = 1; insert10 = 0; cancel = 0;
         #10; rst = 0; insert5 = 1; insert10 = 0; cancel = 0;
         #10; rst = 0; insert5 = 1; insert10 = 0; cancel = 0;
+        #10; insert5 = 0; insert10 = 0;
         
         // 5 + cancel + 5 + 5 + 10 dispense + change
         #10; rst = 0; insert5 = 1; insert10 = 0; cancel = 0;
@@ -55,6 +61,7 @@ module vending_machine_fsm_tb();
         #10; rst = 0; insert5 = 1; insert10 = 0; cancel = 0;
         #10; rst = 0; insert5 = 1; insert10 = 0; cancel = 0;
         #10; rst = 0; insert5 = 0; insert10 = 1; cancel = 0;
+        #10; insert5 = 0; insert10 = 0;
         
         #20; $finish;
         
