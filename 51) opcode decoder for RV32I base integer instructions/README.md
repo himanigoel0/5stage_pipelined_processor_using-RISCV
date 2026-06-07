@@ -180,10 +180,6 @@ The decoder output can be connected to a control unit, which subsequently genera
 
 ---
 
-## Conclusion
-
-This opcode decoder forms the first stage of the instruction decode process in a RISC-V processor. By identifying the instruction format from the opcode field, it enables subsequent modules such as the control unit, register file, ALU, branch unit, and memory interface to correctly interpret and execute RV32I instructions.
-
 ## Explanatory diagrams
 
 ![img1](images/image1.png)
@@ -196,5 +192,8 @@ This opcode decoder forms the first stage of the instruction decode process in a
 
 ![img5](images/image5.png)
 
+---
 
+## Conclusion
 
+This opcode decoder forms the first stage of the instruction decode process in a RISC-V processor. By identifying the instruction format from the opcode field, it enables subsequent modules such as the control unit, register file, ALU, branch unit, and memory interface to correctly interpret and execute RV32I instructions.
