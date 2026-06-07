@@ -1,4 +1,4 @@
-# OPCODE DECODER THEORY:
+#       OPCODE DECODER THEORY:
 
 ![img1](images/image1.png)
 
