@@ -29,6 +29,7 @@ module add_sub_pipeline_tb();
     // since we have combinational alu, we are getting the result of ex stage within the same clk cycle only as decode. 
     // so, cycle 1 -> fetch
     //     cycle 2 -> decode + (execute due to combinational alu)
-    //     cycle 3 -> mem not used in add/sub, so we directly see writeback.
+    //     cycle 3 -> mem not used in add/sub, but we see one clk delay due to ex/mem reg
+    //     cycle 4 -> so we directly see writeback.
     
 endmodule
