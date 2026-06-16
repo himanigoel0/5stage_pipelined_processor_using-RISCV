@@ -18,7 +18,7 @@ The processor supports:
 
   * ADD
   * SUB
-  * MUL
+  
 * I-Type Instructions
 
   * ADDI
