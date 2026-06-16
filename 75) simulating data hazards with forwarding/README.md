@@ -137,15 +137,9 @@ x4 = 125
 x5 = 200
 ```
 
-### Simulation Output
+### Console Output Screenshot
 
-```text
-x1 = 25
-x2 = 50
-x3 = 75
-x4 = 125
-x5 = 200
-```
+![Simulation 2](screenshots/sim2.png)
 
 ### Verification
 
@@ -160,12 +154,6 @@ This test verifies:
 ### Status
 
 ✅ PASS
-
-### Screenshot
-
-`simulation2_load.png`
-
----
 
 # Test 3: Store Instruction Verification
 
@@ -196,14 +184,9 @@ x1 = 55
 x2 = 55
 x3 = 110
 ```
+### Console Output Screenshot
 
-### Simulation Output
-
-```text
-x1 = 55
-x2 = 55
-x3 = 110
-```
+![Simulation 3](screenshots/sim3.png)
 
 ### Verification
 
@@ -218,12 +201,6 @@ This test verifies:
 ### Status
 
 ✅ PASS
-
-### Screenshot
-
-`simulation3_store.png`
-
----
 
 # Test 4: Branch Taken
 
@@ -261,16 +238,9 @@ x3 = 0
 x4 = 0
 x5 = 77
 ```
+### Console Output Screenshot
 
-### Simulation Output
-
-```text
-x1 = 5
-x2 = 5
-x3 = 0
-x4 = 0
-x5 = 77
-```
+![Simulation 4](screenshots/sim4.png)
 
 ### Verification
 
@@ -284,12 +254,6 @@ This test verifies:
 ### Status
 
 ✅ PASS
-
-### Screenshot
-
-`simulation4_branch_taken.png`
-
----
 
 # Test 5: Branch Not Taken
 
@@ -328,15 +292,9 @@ x4 = 42
 x5 = 77
 ```
 
-### Simulation Output
+### Console Output Screenshot
 
-```text
-x1 = 5
-x2 = 10
-x3 = 99
-x4 = 42
-x5 = 77
-```
+![Simulation 5](screenshots/sim5.png)
 
 ### Verification
 
@@ -350,11 +308,6 @@ This test verifies:
 
 ✅ PASS
 
-### Screenshot
-
-`simulation5_branch_not_taken.png`
-
----
 
 # Test 6: Branch Using Latest Computed Value
 
@@ -392,16 +345,9 @@ x3 = 10
 x4 = 111
 x5 = 222
 ```
+### Console Output Screenshot
 
-### Simulation Output
-
-```text
-x1 = 5
-x2 = 5
-x3 = 10
-x4 = 111
-x5 = 222
-```
+![Simulation 6](screenshots/sim6.png)
 
 ### Verification
 
@@ -415,11 +361,6 @@ This test verifies:
 
 ✅ PASS
 
-### Screenshot
-
-`simulation6_branch using latest value_branch not taken.png`
-
----
 
 # Features Successfully Verified
 
