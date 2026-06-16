@@ -52,6 +52,12 @@ Additional units:
 
 ---
 
+# RTL Schematic
+
+The following RTL schematic was generated using Vivado's Elaborated Design view. It shows the major datapath modules used in the implementation, including the Program Counter, Register File, Pipeline Registers, ALU, and Data Memory.
+
+![RTL Schematic](screenshots/rtl_schematic.png)
+
 # Test Cases and Verification
 
 ## Test 1: Basic ADDI and ADD Instructions
