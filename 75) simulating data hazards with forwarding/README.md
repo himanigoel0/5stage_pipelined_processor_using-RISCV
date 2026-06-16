@@ -382,5 +382,22 @@ This test verifies:
 
 ---
 
+# Conclusion
 
-RV32I 5-Stage Pipelined Processor implemented in Verilog for learning and understanding pipelined CPU design, hazard handling, forwarding, and branch control mechanisms.
+This project successfully implements a 5-stage pipelined RV32I processor in Verilog, featuring Instruction Fetch (IF), Instruction Decode (ID), Execute (EX), Memory Access (MEM), and Write Back (WB) stages.
+
+Through extensive simulation and verification, the processor was validated for:
+
+* R-Type instructions (ADD)
+* I-Type instructions (ADDI, LW)
+* S-Type instructions (SW)
+* B-Type instructions (BEQ)
+* Data Forwarding
+* Load-Use Hazard Detection
+* Pipeline Stall Insertion
+* Branch Handling and Pipeline Flush Mechanisms
+
+Multiple test programs were executed to verify arithmetic operations, memory access operations, data hazards, load-use hazards, forwarding paths, branch decisions, and control hazard handling. All simulation results matched the expected outputs, confirming the correctness of the pipeline datapath and control logic.
+
+This project provided practical experience in computer architecture concepts such as pipelining, hazard management, forwarding, stalling, branch control, and RV32I instruction execution, forming a strong foundation for implementing a complete RISC-V processor in future work.
+
