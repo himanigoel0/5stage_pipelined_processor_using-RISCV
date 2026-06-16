@@ -88,15 +88,9 @@ x4 = 20
 x5 = 40
 ```
 
-### Simulation Output
+### Console Output Screenshot
 
-```text
-x1 = 5
-x2 = 10
-x3 = 15
-x4 = 20
-x5 = 40
-```
+![Simulation 1](simulating data hazards with forwarding/sim1.png)
 
 ### Status
 
