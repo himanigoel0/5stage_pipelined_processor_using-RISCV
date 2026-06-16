@@ -90,15 +90,11 @@ x5 = 40
 
 ### Console Output Screenshot
 
-![Simulation 1](simulating data hazards with forwarding/sim1.png)
+![Simulation 1](TCL Console outputs/sim1.png)
 
 ### Status
 
 ✅ PASS
-
-### Screenshot
-
-`simulation1_basic add, addi, R-type and I-type.png`
 
 ---
 
