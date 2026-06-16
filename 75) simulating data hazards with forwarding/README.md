@@ -90,7 +90,7 @@ x5 = 40
 
 ### Console Output Screenshot
 
-![Simulation 1](TCL Console outputs/sim1.png)
+![Simulation 1](screenshots/sim1.png)
 
 ### Status
 
