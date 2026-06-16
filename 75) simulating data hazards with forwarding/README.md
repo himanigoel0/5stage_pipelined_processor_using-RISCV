@@ -17,7 +17,8 @@ The processor supports:
 * R-Type Instructions
 
   * ADD
-  * SUB (if implemented)
+  * SUB
+  * MUL
 * I-Type Instructions
 
   * ADDI
