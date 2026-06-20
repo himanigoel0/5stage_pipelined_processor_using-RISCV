@@ -175,19 +175,14 @@ x6 = 1020
 
 Observed register values:
 
-```text
-x1 = 20
-x2 = 5
-x3 = 100
-x4 = 10
-x5 = 1000
-x6 = 1020
-x7 = 0
-```
+![sim1](TCL_console_output.png)
 
 ---
 
 ## Waveform Analysis
+
+Waveform:
+![sim2](simulation.png)
 
 ### First Multiplication
 
