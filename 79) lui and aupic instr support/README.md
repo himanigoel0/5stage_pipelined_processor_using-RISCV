@@ -222,13 +222,7 @@ x3 = 0x12355004
 
 Observed register values:
 
-```text
-x1 = 305418240
-x2 = 65540
-x3 = 305483780
-x4 = 0
-x5 = 0
-```
+![simulation](screenshots/TCL_console_output)
 
 ---
 
