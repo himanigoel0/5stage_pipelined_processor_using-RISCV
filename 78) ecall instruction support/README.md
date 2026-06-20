@@ -177,7 +177,7 @@ As a result, the processor resumed execution instead of stopping permanently.
 
 # Correct Solution
 
-The halt signal was converted into a register.
+The halt signal was converted into a register (convert into reg data type and then use in always @(posedge clk) block to make it a register, basically 1 Dff).
 
 ```verilog
 reg halt;
