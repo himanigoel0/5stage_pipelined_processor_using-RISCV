@@ -252,48 +252,6 @@ Therefore, forwarding functionality remains correct after integrating U-Type ins
 
 ---
 
-## Debugging Observation
-
-During initial testing, the machine code:
-
-```text
-001081B3
-```
-
-was mistakenly used.
-
-This instruction decodes to:
-
-```assembly
-add x3, x1, x1
-```
-
-instead of:
-
-```assembly
-add x3, x1, x2
-```
-
-As a result:
-
-```text
-x3 = 610836480
-```
-
-was observed.
-
-Waveform analysis showed that both ALU operands contained the value of x1, confirming that the processor datapath was functioning correctly and that the issue originated from incorrect instruction encoding.
-
-The instruction was corrected to:
-
-```text
-002081B3
-```
-
-after which the expected result was obtained.
-
----
-
 ## Conclusion
 
 Support for LUI and AUIPC instructions was successfully integrated into the 5-stage pipelined RV32I processor.
