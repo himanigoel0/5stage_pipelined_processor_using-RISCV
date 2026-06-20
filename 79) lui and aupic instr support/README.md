@@ -222,7 +222,7 @@ x3 = 0x12355004
 
 Observed register values:
 
-![simulation](screenshots/TCL_console_output)
+![simulation](screenshots/TCL_console_output.png)
 
 ---
 
