@@ -608,32 +608,10 @@ This confirms:
 
 ---
 
-# Tools Used
+# Conclusion
 
-- Verilog HDL
-- Xilinx Vivado
-- Artix-7 FPGA Target
-- Behavioral Simulation
-- RTL Analysis
+A complete RV32I 5-stage pipelined RISC-V processor was successfully designed and verified in Verilog HDL. The processor supports arithmetic, logical, memory access, control flow, and system instructions including ADD, SUB, LW, SW, BEQ, ECALL, LUI, AUIPC, MUL, and JAL.
 
----
+The design incorporates hazard detection, data forwarding, pipeline flushing, and performance counters to ensure correct pipelined execution. Extensive simulation results verified correct instruction execution, proper handling of data and control hazards, successful jump operations, and accurate writeback behavior.
 
-# Future Improvements
-
-- JALR Support
-- Complete RV32I ISA
-- Branch Prediction
-- Multi-cycle Multiplier
-- Instruction Cache
-- Data Cache
-- Cache Miss Penalty Handling
-- CSR Instructions
-- Exception Handling
-
----
-
-# Author
-
-Himani Goel  
-B.Tech Integrated Circuit Design and Technology (ICDT)  
-Indian Institute of Technology Gandhinagar (IITGN)
+This project provided hands-on experience with processor microarchitecture, pipeline design, hazard resolution techniques, control logic generation, and RISC-V instruction set implementation, forming a strong foundation for future enhancements such as JALR, cache integration, branch prediction, and complete RV32I support.
