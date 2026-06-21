@@ -595,10 +595,7 @@ x3 = 55
 
 Simulation Output:
 
-```text
-x1 = 4
-x3 = 55
-```
+![simulation](TCL_console_output.png)
 
 This confirms:
 
