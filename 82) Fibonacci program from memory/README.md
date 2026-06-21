@@ -107,17 +107,7 @@ ecall
 
 ## Simulation Output
 
-```text
-x1 = 0
-x2 = 1
-x3 = 1
-x4 = 2
-x5 = 3
-x6 = 5
-x7 = 8
-x8 = 13
-x9 = 21
-```
+![simulation](TCL_console_output.png)
 
 ---
 
