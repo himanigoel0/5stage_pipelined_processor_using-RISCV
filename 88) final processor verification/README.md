@@ -103,7 +103,7 @@ x2 = 10
 
 ## Observed Output
 
-![sim2](load_hazard_test.txt)
+![sim2](load_hazard_test_output.png)
 
 ## Verification
 
@@ -201,7 +201,7 @@ LED Output  = 180
 
 ## Observed Output
 
-![sim3](mimo_test.txt)
+![sim3](mimo_test_output.png)
 
 ---
 
