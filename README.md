@@ -8,6 +8,14 @@ All modules were designed, simulated, tested, and verified using Xilinx Vivado.
 
 ---
 
+## Architecture Overview
+
+The following diagram illustrates the reference 5-stage pipeline architecture 
+this processor is based on:
+
+![Pipeline Datapath](datapath_control_diagram.png)
+> *Source: Patterson & Hennessy, Computer Organization and Design: RISC-V Edition*
+
 # Project Roadmap
 
 ## Phase 1: Combinational Logic Design
