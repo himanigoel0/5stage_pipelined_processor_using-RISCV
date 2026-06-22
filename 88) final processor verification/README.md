@@ -201,7 +201,7 @@ LED Output  = 180
 
 ## Observed Output
 
-![sim3](mimo_test_output.png)
+![sim3](mmio_test_output.png)
 
 ---
 
