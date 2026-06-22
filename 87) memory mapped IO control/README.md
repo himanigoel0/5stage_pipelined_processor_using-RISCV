@@ -281,6 +281,7 @@ gpio_in  = 179
 gpio_out = 180
 led      = 180
 ```
+![sim](simulation.png)
 
 which matches the expected behavior.
 
