@@ -133,9 +133,7 @@ The processor successfully executed the RISC-V program and generated the value `
 
 The UART module received this value and generated the corresponding UART frame:
 
-```text
-1010010000
-```
+![simulation](TCL_console_output.png)
 
 The generated frame correctly contains:
 
