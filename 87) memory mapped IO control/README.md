@@ -287,21 +287,6 @@ which matches the expected behavior.
 
 ---
 
-## Applications
-
-Memory-Mapped I/O is widely used in:
-
-- GPIO Interfaces
-- UART Communication
-- Timers and Counters
-- Interrupt Controllers
-- Sensors
-- Embedded Systems
-- FPGA-Based SoCs
-- Microcontrollers
-
----
-
 ## Conclusion
 
 Memory-Mapped I/O was successfully implemented in the RV32I 5-stage pipelined processor. Dedicated memory locations were assigned for GPIO input and GPIO output operations. The processor successfully read external input data through address `0xF1`, performed arithmetic processing, and wrote the processed result to the GPIO output register at address `0xF0`. Waveform results verified correct MMIO input handling, processor computation, and MMIO output control, demonstrating a complete processor-peripheral communication mechanism.
