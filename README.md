@@ -327,3 +327,11 @@ This repository contains 88+ progressively developed modules covering:
 The project demonstrates the complete path from logic gates to a functional RV32I 5-stage pipelined RISC-V processor.
 
 ---
+
+# Conclusion
+
+Building this project step-by-step provided a practical understanding of how a modern processor is developed from fundamental digital building blocks. What began with simple combinational and sequential circuits gradually evolved into a complete RV32I 5-stage pipelined RISC-V processor capable of executing real programs and interacting with external peripherals.
+
+Throughout the development process, several important computer architecture concepts such as pipelining, data hazards, forwarding, stalling, control flow handling, memory access, and processor-peripheral communication were implemented and verified in hardware description language. The final processor was successfully validated using multiple test programs, including arithmetic operations, hazard scenarios, UART communication, GPIO interfacing, and Memory-Mapped I/O.
+
+Beyond the final processor itself, this project served as a comprehensive exercise in RTL design, debugging, verification, and system integration, transforming individual hardware modules into a complete working computing system.
