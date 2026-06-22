@@ -30,6 +30,7 @@ module riscv_top(
     pipeline cpu(
                 .clk(clk),
                 .rst(rst),
+                .gpio_in(gpio_in),  
                 .pc_debug(pc_debug),
                 .instruction_debug(instruction_debug),
                 .read_data1_debug(read_data1_debug),
@@ -59,7 +60,7 @@ module riscv_top(
             gpio <= 8'b0;
     end
           
-    assign gpio_out = gpio;
+    assign gpio_out = gpio_mmio;
     
     reg halt_d;
     always @(posedge clk or posedge rst) begin

@@ -21,10 +21,12 @@ module mmio_tb();
     always #5 clk = ~clk;
 
     initial begin
-        rst = 1; gpio_in = 8'b0;
+        rst = 1; gpio_in = 8'b10110011;   // 179 decimal
         #10; rst = 0;
         #300;
         $display("x5         = %d", uut.cpu.rf.rf[5]);
+        $display("x6         = %d", uut.cpu.rf.rf[6]);
+        $display("x7         = %d", uut.cpu.rf.rf[7]);
         $display("LED Output = %b", led);
         #20; $finish;
     end
