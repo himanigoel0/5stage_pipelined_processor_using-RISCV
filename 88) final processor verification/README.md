@@ -2,15 +2,13 @@
 
 ## Objective
 
-To verify the functionality of the complete RV32I 5-stage pipelined processor by executing multiple validation programs and observing register values, memory operations, hazard handling, peripheral interfaces, and Memory-Mapped I/O (MMIO) behavior.
+To validate the functionality of the final RV32I 5-stage pipelined processor by executing representative test programs and verifying arithmetic operations, forwarding logic, hazard handling, and Memory-Mapped I/O (MMIO) functionality.
 
 ---
 
-## Test Cases Performed
+# Test 1: Arithmetic and Forwarding Validation
 
-### 1. Arithmetic and Forwarding Validation
-
-#### Assembly Code
+## Assembly Code
 
 ```assembly
 addi x1,x0,5
@@ -23,7 +21,7 @@ add  x5,x4,x3
 ecall
 ```
 
-#### Machine Code
+## Machine Code
 
 ```text
 00500093
@@ -34,7 +32,7 @@ ecall
 00000073
 ```
 
-#### Expected Output
+## Expected Output
 
 ```text
 x1 = 5
@@ -44,181 +42,96 @@ x4 = 25
 x5 = 40
 ```
 
-#### Observed Output
+## Observed Output
 
-```text
-x1 = 5
-x2 = 10
-x3 = 15
-x4 = 25
-x5 = 40
+![sim1](arith_test_output.png)
+
+## Verification
+
+The result of each instruction was immediately consumed by the following instruction without inserting software stalls.
+
+Example:
+
+```assembly
+add x3,x1,x2
+add x4,x3,x2
 ```
 
-#### Verification
+The second instruction depends on the result of the first instruction. Correct outputs confirm that the forwarding unit successfully resolved data dependencies.
 
-- Arithmetic instructions executed correctly.
-- Register writeback verified.
-- Data forwarding verified.
-- Pipeline dependency handling verified.
+### Result
 
-Result: PASS
+PASS
 
 ---
 
-### 2. Fibonacci Sequence Program
+# Test 2: Load-Use Hazard Validation
 
-#### Objective
+## Objective
 
-To verify sequential arithmetic execution and register updates.
+To verify the hazard detection unit for load-use dependencies.
 
-#### Expected Registers
-
-```text
-x1 = 0
-x2 = 1
-x3 = 1
-x4 = 2
-x5 = 3
-x6 = 5
-x7 = 8
-x8 = 13
-x9 = 21
-```
-
-#### Observed Output
-
-```text
-x1=0
-x2=1
-x3=1
-x4=2
-x5=3
-x6=5
-x7=8
-x8=13
-x9=21
-```
-
-#### Verification
-
-- ALU operations verified.
-- Register file operation verified.
-- Pipeline execution verified.
-
-Result: PASS
-
----
-
-### 3. Array Sum Program
-
-#### Objective
-
-To verify memory read operations and arithmetic accumulation.
-
-#### Data Memory Initialization
+## Data Memory Initialization
 
 ```text
 mem[0] = 5
-mem[1] = 10
-mem[2] = 15
-mem[3] = 20
 ```
 
-#### Expected Result
-
-```text
-Sum = 50
-```
-
-#### Observed Result
-
-```text
-x5 = 50
-```
-
-#### Verification
-
-- Load instructions verified.
-- Data memory access verified.
-- Arithmetic accumulation verified.
-
-Result: PASS
-
----
-
-### 4. UART Interface Validation
-
-#### Objective
-
-To verify UART transmission from processor output data.
-
-#### Test Program
+## Assembly Code
 
 ```assembly
-addi x5,x0,72
+lw  x1,0(x0)
+add x2,x1,x1
+
 ecall
 ```
 
-ASCII value:
+## Machine Code
 
 ```text
-72 = 'H'
+00002083
+00108133
+00000073
 ```
 
-#### Observed UART Frame
+## Expected Output
 
 ```text
-1010010000
+x1 = 5
+x2 = 10
 ```
 
-#### Verification
+## Observed Output
 
-- UART frame generation verified.
-- Processor-to-peripheral communication verified.
+![sim2](load_hazard_test.txt)
 
-Result: PASS
+## Verification
 
----
-
-### 5. GPIO Interface Validation
-
-#### Objective
-
-To verify processor output through GPIO-connected LEDs.
-
-#### Test Program
+This test introduces a load-use dependency.
 
 ```assembly
-addi x5,x0,170
-sw   x5,240(x0)
-ecall
+lw  x1,0(x0)
+add x2,x1,x1
 ```
 
-#### Expected Output
+The ADD instruction immediately requires the value being loaded by the previous instruction. The hazard detection unit inserts a stall cycle to ensure correct execution.
 
-```text
-GPIO Output = 170
-LED Output  = 170
-```
 
-#### Verification
+### Result
 
-- GPIO interface verified.
-- Output peripheral communication verified.
-
-Result: PASS
+PASS
 
 ---
 
-### 6. MMIO Input and Output Validation
+# Test 3: MMIO Input and Output Validation
 
-#### Objective
+## Objective
 
-To verify Memory-Mapped I/O communication between processor and peripherals.
+To verify Memory-Mapped I/O communication between external peripherals and the processor.
 
 ---
 
-### Memory Map
+## Memory Map
 
 | Address | Function |
 |----------|----------|
@@ -227,7 +140,7 @@ To verify Memory-Mapped I/O communication between processor and peripherals.
 
 ---
 
-### Assembly Program
+## Assembly Code
 
 ```assembly
 lw   x5,241(x0)
@@ -239,7 +152,7 @@ ecall
 
 ---
 
-### Machine Code
+## Machine Code
 
 ```text
 0F102283
@@ -250,7 +163,7 @@ ecall
 
 ---
 
-### Testbench Input
+## Testbench Input
 
 ```verilog
 gpio_in = 8'b10110011;
@@ -264,23 +177,21 @@ Input value:
 
 ---
 
-### Expected Execution
+## Expected Execution
 
 ```text
-GPIO Input = 179
-
 Read GPIO Input
-        ↓
+      ↓
 
 x5 = 179
 
 Increment Value
-        ↓
+      ↓
 
 x5 = 180
 
 Write to GPIO Output
-        ↓
+      ↓
 
 GPIO Output = 180
 LED Output  = 180
@@ -288,18 +199,13 @@ LED Output  = 180
 
 ---
 
-### Observed Output
+## Observed Output
 
-```text
-gpio_in  = 179
-x5       = 180
-gpio_out = 180
-led      = 180
-```
+![sim3](mimo_test.txt)
 
 ---
 
-### Waveform Observation
+## Waveform Observation
 
 ```text
 gpio_in  : 179
@@ -307,45 +213,51 @@ gpio_out : 0 → 179 → 180
 led      : 0 → 179 → 180
 ```
 
-Initially the outputs remain zero while instructions propagate through the 5-stage pipeline.
+Initially the output remains zero because instructions are still propagating through the pipeline stages.
 
 ```text
 IF → ID → EX → MEM → WB
 ```
 
-After the first store instruction, the GPIO output becomes 179.
+The first store operation writes the original GPIO input value to the output register.
 
-After the increment operation and second store instruction, the GPIO output becomes 180.
+```text
+gpio_out : 0 → 179
+```
 
-This confirms:
+The processor then increments the input value and performs another store operation.
+
+```text
+gpio_out : 179 → 180
+```
+
+This verifies:
 
 - MMIO Input Read
 - MMIO Output Write
 - Processor Computation
 - Peripheral Communication
 
-Result: PASS
+### Result
+
+PASS
 
 ---
 
-## Final Validation Summary
+# Final Validation Summary
 
 | Test | Status |
 |--------|--------|
 | Arithmetic Operations | PASS |
 | Data Forwarding | PASS |
-| Register Writeback | PASS |
-| Fibonacci Program | PASS |
-| Array Sum Program | PASS |
-| UART Interface | PASS |
-| GPIO Interface | PASS |
-| MMIO Input | PASS |
-| MMIO Output | PASS |
+| Load Hazard Handling | PASS |
+| MMIO Input Read | PASS |
+| MMIO Output Write | PASS |
 | Processor Computation | PASS |
 | ECALL Termination | PASS |
 
 ---
 
-## Conclusion
+# Conclusion
 
-The complete RV32I 5-stage pipelined processor was successfully tested and validated using arithmetic programs, Fibonacci generation, array summation, UART communication, GPIO interfacing, and Memory-Mapped I/O operations. Simulation results and waveforms confirmed correct execution of instructions, hazard handling, forwarding logic, memory access, peripheral communication, and processor-to-I/O interaction. All validation tests passed successfully, demonstrating correct functionality of the final processor design.
+The final RV32I 5-stage pipelined processor was successfully tested using arithmetic, forwarding, load-use hazard, and Memory-Mapped I/O validation programs. Simulation outputs and waveform analysis confirmed correct instruction execution, forwarding operation, hazard detection, register writeback, MMIO communication, and processor-to-peripheral interaction. All validation tests passed successfully.
