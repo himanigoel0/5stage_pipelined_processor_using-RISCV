@@ -287,8 +287,6 @@ All programs produced expected outputs during simulation.
 - Verilog HDL
 - Xilinx Vivado
 - Vivado Simulator
-- Git
-- GitHub
 
 ---
 
