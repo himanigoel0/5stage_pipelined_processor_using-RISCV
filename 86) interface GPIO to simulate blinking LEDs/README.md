@@ -154,6 +154,9 @@ The waveform confirmed alternating LED states:
 
 which demonstrates successful GPIO-based LED blinking.
 
+### Note:
+At the beginning of the simulation, the LED output remains 0 for a few clock cycles. This is expected because the processor has not yet completed execution of the program. During these initial cycles, the instructions are being fetched, decoded, executed, and propagated through the 5-stage pipeline. Once the result reaches the write-back stage and register x5 is updated with the value 72, the GPIO module receives the valid data and starts generating the blinking LED pattern.
+
 ---
 
 ## Conclusion
