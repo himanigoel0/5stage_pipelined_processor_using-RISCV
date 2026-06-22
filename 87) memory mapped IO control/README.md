@@ -178,10 +178,7 @@ The following were successfully verified:
 
 Observed result:
 
-```text
-x5         = 170
-LED Output = 10101010
-```
+![sim](TCL_console_output.png)
 
 ---
 
