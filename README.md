@@ -14,7 +14,7 @@ The following diagram illustrates the reference 5-stage pipeline architecture
 this processor is based on:
 
 ![Pipeline Datapath](datapath_control_diagram.png)
-> *Source: Patterson & Hennessy, Computer Organization and Design: RISC-V Edition*
+> *Source: Patterson & Hennessy, Computer Organization and Design: RISC-V Edition* 
 
 # Project Roadmap
 
