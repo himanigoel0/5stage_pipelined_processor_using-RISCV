@@ -1,39 +1,36 @@
-# Implement Memory-Mapped I/O Control
+# Implement Memory-Mapped I/O (MMIO) Control
 
 ## Objective
 
-To implement Memory-Mapped I/O (MMIO) in the RV32I 5-stage pipelined processor and control a GPIO device through a dedicated memory address.
+To implement Memory-Mapped I/O (MMIO) in the RV32I 5-stage pipelined processor and demonstrate both GPIO input and GPIO output operations using dedicated memory-mapped addresses.
 
 ---
 
 ## Introduction
 
-Memory-Mapped I/O (MMIO) allows peripherals such as LEDs, UARTs, timers, and sensors to be accessed using normal memory instructions. Instead of using special I/O instructions, the processor communicates with peripherals through reserved memory locations.
+Memory-Mapped I/O (MMIO) is a technique in which peripherals are assigned specific memory addresses. The processor interacts with these peripherals using standard load (`LW`) and store (`SW`) instructions instead of dedicated I/O instructions.
 
-In this experiment, address `0xF0` is assigned to a GPIO register. When the processor executes a store instruction to this address, the value is written to the GPIO register rather than normal data memory. The GPIO register then drives the LED output.
+In this experiment:
+
+- Address `0xF0` is assigned to a GPIO Output Register.
+- Address `0xF1` is assigned to a GPIO Input Register.
+
+This allows the processor to read external input values and control output devices such as LEDs through normal memory operations.
 
 ---
 
 ## Memory Map
 
-| Address Range | Function |
-|--------------|----------|
-| 0 - 239 | Data Memory (RAM) |
-| 240 (0xF0) | GPIO Register |
-| 241 onwards | Reserved |
+| Address | Function |
+|----------|----------|
+| 0xF0 (240) | GPIO Output Register |
+| 0xF1 (241) | GPIO Input Register |
 
 ---
 
 ## MMIO Implementation
 
-### GPIO Register
-
-```verilog
-reg [7:0] gpio_reg;
-assign gpio_out = gpio_reg;
-```
-
-### MMIO Write Logic
+### GPIO Output Write Logic
 
 ```verilog
 always @(posedge clk) begin
@@ -51,7 +48,44 @@ always @(posedge clk) begin
 end
 ```
 
-If the processor writes to address `240 (0xF0)`, the data is stored in the GPIO register. Otherwise, it is written to normal RAM.
+When the processor performs:
+
+```assembly
+sw xN,240(x0)
+```
+
+the value is written to the GPIO register instead of normal data memory.
+
+---
+
+### GPIO Input Read Logic
+
+```verilog
+always @(*) begin
+
+    if(memread) begin
+
+        if(addr == 32'd241)
+            read_data = {24'b0,gpio_in};
+
+        else
+            read_data = mem[addr];
+
+    end
+
+    else
+        read_data = 32'b0;
+
+end
+```
+
+When the processor performs:
+
+```assembly
+lw xN,241(x0)
+```
+
+the GPIO input value is returned instead of RAM data.
 
 ---
 
@@ -60,160 +94,213 @@ If the processor writes to address `240 (0xF0)`, the data is stored in the GPIO 
 ### Assembly Code
 
 ```assembly
-addi x5, x0, 170
-sw   x5, 240(x0)
+# Read GPIO Input
+lw   x5,241(x0)
+
+# Copy input
+addi x6,x5,0
+
+# Increment input
+addi x7,x5,1
+
+# Write original value to GPIO Output
+sw   x5,240(x0)
+
+# Read GPIO Input again
+lw   x5,241(x0)
+
+# Increment input
+addi x5,x5,1
+
+# Write incremented value to GPIO Output
+sw   x5,240(x0)
+
 ecall
 ```
 
-### Machine Code
+---
+
+## Machine Code
 
 ```text
-0AA00293
+0F102283
+00028313
+00128393
+0E502823
+0F102283
+00128293
 0E502823
 00000073
 ```
 
 ---
 
-## Program Execution
+## Test Conditions
 
-### Step 1
+The GPIO input was initialized in the testbench as:
 
-```assembly
-addi x5, x0, 170
+```verilog
+gpio_in = 8'b10110011;
 ```
 
-Stores:
+which corresponds to:
 
 ```text
-x5 = 170
+179 decimal
 ```
-
-Binary representation:
-
-```text
-170 = 10101010₂
-```
-
-### Step 2
-
-```assembly
-sw x5, 240(x0)
-```
-
-The processor generates address `240`.
-
-The MMIO logic detects:
-
-```text
-addr = 240 (0xF0)
-```
-
-and updates:
-
-```text
-gpio_reg = 170
-```
-
-instead of writing to RAM.
-
-### Step 3
-
-```assembly
-ecall
-```
-
-Terminates execution.
 
 ---
 
-## Simulation Results
+## Expected Execution
 
-### Register Value
+### First MMIO Transaction
 
-```text
-x5 = 170
-```
-
-### LED Output
+The processor reads:
 
 ```text
-LED Output = 10101010
+gpio_in = 179
 ```
 
-### Waveform Observation
+using:
 
-Initially, the LED output remains `0` because the instructions are still propagating through the 5-stage pipeline.
+```assembly
+lw x5,241(x0)
+```
+
+Result:
+
+```text
+x5 = 179
+x6 = 179
+x7 = 180
+```
+
+The original value is then written to the GPIO output register:
+
+```assembly
+sw x5,240(x0)
+```
+
+Result:
+
+```text
+GPIO Output = 179
+LED Output  = 179
+```
+
+---
+
+### Second MMIO Transaction
+
+The processor again reads:
+
+```text
+gpio_in = 179
+```
+
+and performs:
+
+```assembly
+addi x5,x5,1
+```
+
+Result:
+
+```text
+x5 = 180
+```
+
+The incremented value is written to the GPIO output register:
+
+```assembly
+sw x5,240(x0)
+```
+
+Result:
+
+```text
+GPIO Output = 180
+LED Output  = 180
+```
+
+---
+
+## Waveform Analysis
+
+Observed waveform:
+
+```text
+gpio_in  : 179
+gpio_out : 0 → 179 → 180
+led      : 0 → 179 → 180
+```
+
+### Explanation
+
+Initially, all outputs remain zero because the instructions are still propagating through the 5-stage pipeline.
 
 ```text
 IF → ID → EX → MEM → WB
 ```
 
-After the store instruction reaches the Memory stage and accesses address `0xF0`, the GPIO register is updated and the LED output changes from:
+After the first store instruction reaches the Memory stage, the value read from the GPIO input register is written to the GPIO output register.
 
 ```text
-00000000
+GPIO Output : 0 → 179
+LED Output  : 0 → 179
 ```
 
-to
+The second MMIO transaction reads the input again, increments the value by one, and writes it back.
 
 ```text
-10101010
+GPIO Output : 179 → 180
+LED Output  : 179 → 180
 ```
 
-The value then remains stable because the GPIO register retains its contents until another write operation occurs.
+This confirms successful MMIO input, processor computation, and MMIO output operation.
 
 ---
 
 ## Verification
 
-The following were successfully verified:
+The following functionalities were successfully verified:
 
-- ADDI instruction execution
-- Register x5 updated with 170
-- Store instruction generated address 0xF0
-- MMIO logic detected GPIO address
-- GPIO register updated correctly
-- LED output reflected GPIO value
+- MMIO GPIO Input Read
+- MMIO GPIO Output Write
+- Load Instruction (LW)
+- Store Instruction (SW)
+- Arithmetic Operation (ADDI)
+- Data Transfer through MMIO
+- Processor-to-Peripheral Communication
+- Peripheral-to-Processor Communication
 
-Observed result:
+Observed Results:
 
-![sim](TCL_console_output.png)
+```text
+gpio_in  = 179
+gpio_out = 180
+led      = 180
+```
+
+which matches the expected behavior.
 
 ---
 
-## Difference Between GPIO Interface and MMIO
+## Applications
 
-### GPIO Interface
+Memory-Mapped I/O is widely used in:
 
-```text
-x5
- ↓
-GPIO
- ↓
-LED
-```
-
-The LED was directly connected to a processor-generated value.
-
-### Memory-Mapped I/O
-
-```text
-x5
- ↓
-SW Instruction
- ↓
-Address 0xF0
- ↓
-GPIO Register
- ↓
-LED
-```
-
-The processor controls the peripheral through a dedicated memory address.
+- GPIO Interfaces
+- UART Communication
+- Timers and Counters
+- Interrupt Controllers
+- Sensors
+- Embedded Systems
+- FPGA-Based SoCs
+- Microcontrollers
 
 ---
 
 ## Conclusion
 
-Memory-Mapped I/O was successfully implemented in the RV32I 5-stage pipelined processor. A GPIO register was mapped to address `0xF0`, allowing the processor to control an external LED using a standard store instruction. Simulation results verified correct MMIO operation, demonstrating how peripherals are interfaced in real processor-based systems.
+Memory-Mapped I/O was successfully implemented in the RV32I 5-stage pipelined processor. Dedicated memory locations were assigned for GPIO input and GPIO output operations. The processor successfully read external input data through address `0xF1`, performed arithmetic processing, and wrote the processed result to the GPIO output register at address `0xF0`. Waveform results verified correct MMIO input handling, processor computation, and MMIO output control, demonstrating a complete processor-peripheral communication mechanism.
